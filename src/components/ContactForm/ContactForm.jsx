@@ -23,7 +23,7 @@ const ContactForm = ({ contact, handleChange, handleSubmit }) => {
           <input
             type="tel"
             id={phoneId}
-            name="phone"
+            name="number"
             value={contact.number}
             onChange={handleChange}
             placeholder="Enter number"
