@@ -1,0 +1,22 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form label {
+    display: flex;
+    flex-direction: column;
+}
+
+.form button {
+    background-color: blue;
+    color: white;
+    cursor: pointer;
+    width: 150px;
+    transition: all 0.3s ease;
+}
+
+.form button:hover {
+    transform: scale(1.05);
+}

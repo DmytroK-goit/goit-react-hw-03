@@ -46,7 +46,6 @@ function App() {
   return (
     <>
       <h1>Phonebook</h1>
-
       <ContactForm
         contact={newContact}
         handleChange={handleChange}

@@ -1,4 +1,5 @@
 import { useId } from "react";
+import s from "./ContactForm.module.css";
 
 const ContactForm = ({ contact, handleChange, handleSubmit }) => {
   const nameId = useId();
@@ -6,7 +7,7 @@ const ContactForm = ({ contact, handleChange, handleSubmit }) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form className={s.form} onSubmit={handleSubmit}>
         <label htmlFor={nameId}>
           Name
           <input
