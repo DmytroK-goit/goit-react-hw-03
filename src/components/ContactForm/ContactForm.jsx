@@ -1,38 +1,66 @@
 import { useId } from "react";
+import * as Yup from "yup";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import s from "./ContactForm.module.css";
 
-const ContactForm = ({ contact, handleChange, handleSubmit }) => {
+const ContactForm = ({ handleSubmit }) => {
   const nameId = useId();
   const phoneId = useId();
+  const FeedbackSchema = Yup.object().shape({
+    name: Yup.string()
+      .min(3, "Занадто коротке ім'я!")
+      .max(50, "Занадто довге ім'я!")
+      .required("Ім'я є обов'язковим"),
+    number: Yup.string()
+      .matches(
+        /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/,
+        "Номер не валідний"
+      )
+      .min(3, "Занадто короткий номер")
+      .max(50, "Занадто довгий номер")
+      .required("Номер телефону є обов'язковим"),
+  });
+
+  const initialValues = {
+    name: "",
+    number: "",
+  };
 
   return (
-    <div>
-      <form className={s.form} onSubmit={handleSubmit}>
-        <label htmlFor={nameId}>
-          Name
-          <input
-            type="text"
-            id={nameId}
-            name="name"
-            value={contact.name}
-            onChange={handleChange}
-            placeholder="Enter your name"
-          />
-        </label>
-        <label htmlFor={phoneId}>
-          Number
-          <input
-            type="tel"
-            id={phoneId}
-            name="number"
-            value={contact.number}
-            onChange={handleChange}
-            placeholder="Enter number"
-          />
-        </label>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={(values, actions) => {
+        handleSubmit(values);
+        actions.resetForm();
+      }}
+      validationSchema={FeedbackSchema}
+    >
+      <Form className={s.form}>
+        <div>
+          <label htmlFor={nameId}>
+            <Field
+              type="text"
+              name="name"
+              id={nameId}
+              placeholder="Enter your name"
+            />
+            <ErrorMessage name="name" component="span" />
+          </label>
+        </div>
+        <div>
+          <label htmlFor={phoneId}>
+            <Field
+              type="tel"
+              name="number"
+              id={phoneId}
+              placeholder="+38 (000) 000-00-00"
+            />
+            <ErrorMessage name="number" component="span" />
+          </label>
+        </div>
         <button type="submit">Add contact</button>
-      </form>
-    </div>
+      </Form>
+    </Formik>
   );
 };
 export default ContactForm;

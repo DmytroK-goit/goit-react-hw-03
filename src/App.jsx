@@ -26,8 +26,7 @@ function App() {
     });
   };
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+  const handleSubmit = (newContact) => {
     const id = nanoid();
     const contactWithId = { ...newContact, id };
     setContacts((prevContacts) => [...prevContacts, contactWithId]);
